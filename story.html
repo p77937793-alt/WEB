@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>一水千田｜一滴水的旅程</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== 1. 讓整頁「一格一格」停下來 ===== */
+    html {
+      scroll-snap-type: y mandatory;   /* 往下滑時，一定停在某一格的開頭 */
+      scroll-behavior: smooth;         /* 點箭頭時平滑捲動 */
+    }
+
+    /* ===== 2. 每一格都是一整個螢幕高 ===== */
+    .panel {
+      height: 100vh;                   /* 一格＝一個螢幕高 */
+      height: 100dvh;                  /* 手機網址列會縮放，用這個比較準 */
+      scroll-snap-align: start;        /* 停的位置：這一格的最上面 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;         /* 內容上下置中 */
+      align-items: center;             /* 內容左右置中 */
+      text-align: center;
+      padding: 0 24px;
+      box-sizing: border-box;
+      position: relative;              /* 讓箭頭可以貼在這一格的底部 */
+      color: white;
+    }
+    .panel h2 { font-size: 40px; margin: 0 0 12px; }
+    .panel p  { font-size: 18px; max-width: 560px; margin: 0; }
+    .panel .big { font-size: 72px; font-weight: bold; line-height: 1.1; }
+
+    /* 每一格的背景寫在各自的 style="background: …" 裡，可以換成顏色或照片 */
+
+    /* ===== 3. 會上下跳動的箭頭 ===== */
+    .arrow {
+      position: absolute;
+      bottom: 28px;
+      font-size: 34px;
+      color: inherit;
+      text-decoration: none;
+      opacity: .85;
+      animation: bounce 1.6s infinite;   /* 一直重複跳 */
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(12px); }
+    }
+
+    /* ===== 4. 文字滑進畫面時才淡入 ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .8s, transform .8s;
+    }
+    .reveal.show {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* 上方選單固定在最上面，不佔空間 */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; background: rgba(255,255,255,.9); }
+
+    /* 有人在系統設定「減少動態效果」時，關掉動畫 */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .arrow { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a class="logo" href="index.html"><img src="images/drop.svg" alt="">一水千田</a>
+    <nav>
+      <a href="index.html">首頁</a>
+      <a href="story.html">大圳故事</a>
+      <a href="cards.html">卡牌遊戲</a>
+      <a href="index1.html">認識大圳歷史小遊戲</a>
+      <a href="qr.html">手機掃碼(大圳小遊戲)</a>
+    </nav>
+  </header>
+
+  <!-- 第 1 格 -->
+  <section class="panel" id="p1" style='background: linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)), url("images/ex-hero.jpg") center / cover;'>
+    <h2 class="reveal">一滴水的旅程</h2>
+    <p class="reveal">往下滑，跟著一滴水從大漢溪流進桃園台地。</p>
+    <a class="arrow" href="#p2" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 2 格 -->
+  <section class="panel" id="p2" style='background: #a5643a;'>
+    <h2 class="reveal">台地上缺水</h2>
+    <p class="reveal">大漢溪的河床深陷在台地崖壁下方，水上不來。先民利用不透水的紅土挖埤塘，蓄存雨水灌溉。</p>
+    <a class="arrow" href="#p3" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 3 格 -->
+  <section class="panel" id="p3" style='background: #8a5a2b;'>
+    <h2 class="reveal">埤塘各自為政</h2>
+    <p class="reveal">早期埤塘由農民各自開鑿、各自管理，池與池之間沒有水路相連。豪雨時溢流，久旱時乾涸。</p>
+    <a class="arrow" href="#p4" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 4 格 -->
+  <section class="panel" id="p4" style='background: #2b6cb0;'>
+    <div class="big reveal">1916</div>
+    <h2 class="reveal">石門取水口開工</h2>
+    <p class="reveal">從大漢溪上游石門取水，利用台地向西北傾斜的地勢，讓水靠重力流上台地。</p>
+    <a class="arrow" href="#p5" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 5 格 -->
+  <section class="panel" id="p5" style='background: #374151;'>
+    <div class="big reveal">15.62 公里</div>
+    <h2 class="reveal">穿山的導水隧道</h2>
+    <p class="reveal">導水路約 20.47 公里，其中 8 段隧道合計約 15.62 公里，施工時遇到地層鬆軟、地下水滲出。</p>
+    <a class="arrow" href="#p6" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 6 格 -->
+  <section class="panel" id="p6" style='background: #4b5563;'>
+    <h2 class="reveal">蓋大圳的人</h2>
+    <p class="reveal">張令紀等技師帶領工程，參與施工的還有礦工與在地客家茶農。殉職名錄中，也留下了溫細妹、范氏美妹等女性的名字。</p>
+    <a class="arrow" href="#p7" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 7 格 -->
+  <section class="panel" id="p7" style='background: #2b7bb9;'>
+    <div class="big reveal">1924.5.26</div>
+    <h2 class="reveal">通水</h2>
+    <p class="reveal">導水路及主要幹支分線通水，水經幹線、支線、分線送往各灌溉區。</p>
+    <a class="arrow" href="#p8" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 8 格 -->
+  <section class="panel" id="p8" style='background: #1f7a8c;'>
+    <div class="big reveal">231</div>
+    <h2 class="reveal">口線內貯水池</h2>
+    <p class="reveal">1919 年成立的桃園大圳組合整修貯水池與給水路，1928 年完成整體系統。雨季存水、乾季放水。</p>
+    <a class="arrow" href="#p9" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 9 格 -->
+  <section class="panel" id="p9" style='background: #5d8f2f;'>
+    <div class="big reveal">二萬二千餘公頃</div>
+    <h2 class="reveal">從看天田到雙期稻作</h2>
+    <p class="reveal">大圳供應二萬二千餘公頃耕地，原本缺水的土地，成為適合一年兩期稻作的水田。</p>
+    <a class="arrow" href="#p10" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 10 格 -->
+  <section class="panel" id="p10" style='background: #6b46c1;'>
+    <h2 class="reveal">埤塘的今天</h2>
+    <p class="reveal">1-1 號池「辨天池」曾是桃園的遊憩名勝，後因機場開發與遷村安置填平，成為今天的陽明運動公園一帶。</p>
+    <a class="arrow" href="#p11" aria-label="下一段">⌄</a>
+  </section>
+  <!-- 第 11 格（最後一格，不放箭頭） -->
+  <section class="panel" id="p11" style="background:#f4efe4;color:#2d2a26">
+    <h2 class="reveal">換你來蓋大圳</h2>
+    <p class="reveal">在桌遊裡和其他玩家一起完成這條水路，或在小遊戲裡化身一滴水。</p>
+    <div class="reveal"><a class="btn" href="play.html" style="background:#2b7bb9;color:white">開始試玩桌遊</a>
+    <a class="btn" href="index1.html" style="background:#5d8f2f;color:white">開始試玩互動小遊戲</a></div>
+  </section>
+
+  <script>
+    // 文字滑進畫面時，加上 show，讓它淡入
+    const items = document.querySelectorAll('.reveal');
+    const watcher = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');   // 滑走後移除，下次回來會再淡入一次
+        }
+      });
+    }, { threshold: 0.3 });
+    items.forEach(function (el) { watcher.observe(el); });
+  </script>
+</body>
+</html>

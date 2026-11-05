@@ -1,0 +1,162 @@
+/* ===== 1. 全站的顏色與字型 ===== */
+body {
+    margin: 0;
+    font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    background: #f4efe4; /* 米色底 */
+    color: #2d2a26; /* 深灰字 */
+    line-height: 1.7;
+}
+
+/* ===== 2. 上方選單 ===== */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: #ffffff;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2b7bb9;
+  text-decoration: none;
+}
+.logo img { width: 28px; }
+.nav nav a {
+  margin-left: 16px;
+  color: #2d2a26;
+  text-decoration: none;
+}
+.nav nav a:hover { color: #2b7bb9; }
+
+/* ===== 3. 大標題區 ===== */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)), /* 半透明黑色，讓白字看得清楚 */
+    url("images/P3110446.jpg") center / cover no-repeat; /* 照片置中、填滿整區 */
+    color: white;
+}
+.hero h1 { font-size: 56px; margin: 0; letter-spacing: 8px; }
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 32px;
+  background: white;
+  color: #2b7bb9;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ===== 4. 三個重點數字 ===== */
+.facts {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px 20px;
+}
+.fact {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 30px;
+  text-align: center;
+}
+.fact b { display: block; font-size: 36px; color: #b5532d; }
+
+/* ===== 5. 文字內容 ===== */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ===== 6. 翻面卡牌 ===== */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.card {
+  width: 200px;
+  height: 280px;
+  border-radius: 12px;
+  background: white;
+  border: 3px solid #2b6cb0;
+  padding: 16px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.card .back { display: none; }               /* 一開始看不到背面 */
+.card.flipped .front { display: none; }      /* 翻面後：藏起正面 */
+.card.flipped .back { display: block; }      /* 翻面後：顯示背面 */
+.card.flipped { background: #f1e8d6; }
+
+/* ===== 7. 頁尾 ===== */
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #7a7166;
+  font-size: 14px;
+}
+
+/* ===== 8. 手機版：螢幕寬度小於 600px 時 ===== */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 40px; }
+  .facts { flex-direction: column; align-items: center; }
+  .nav { flex-direction: column; gap: 6px; }
+}
+
+
+/* ===== 9. 動畫：平滑捲動 ===== */
+html { scroll-behavior: smooth; }
+
+/* ===== 10. 大標題：進場動畫＋往下的箭頭 ===== */
+.hero { position: relative; min-height: 70vh; display: flex; flex-direction: column;
+        justify-content: center; align-items: center; box-sizing: border-box; }
+.hero h1, .hero p, .hero .btn { animation: rise 1s ease-out both; }
+.hero p { animation-delay: .25s; }
+.hero .btn { animation-delay: .5s; margin: 20px 6px 0; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: none; }
+}
+.arrow {
+  position: absolute;
+  bottom: 20px;
+  font-size: 34px;
+  color: white;
+  text-decoration: none;
+  animation: bounce 1.6s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(12px); }
+}
+
+/* ===== 11. 滑到才淡入（animate.js 會自動加上 reveal） ===== */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s, transform .7s; }
+.reveal.show { opacity: 1; transform: none; }
+
+/* ===== 12. 新增內容：時間軸、地圖、按鈕 ===== */
+.timeline { list-style: none; padding: 0; border-left: 3px solid #2b7bb9; margin-left: 10px; }
+.timeline li { position: relative; padding: 0 0 18px 24px; }
+.timeline li::before { content: ""; position: absolute; left: -9px; top: 6px; width: 15px; height: 15px;
+                       border-radius: 50%; background: #2b7bb9; }
+.timeline b { display: block; font-size: 22px; color: #b5532d; }
+.map { margin: 0; }
+.map img { width: 100%; border-radius: 12px; display: block; }
+.map figcaption { font-size: 13px; color: #7a7166; margin-top: 6px; }
+.story-link { text-align: center; }
+.btn-blue { background: #2b7bb9; color: white; }
+
+/* ===== 13. 減少動態效果：系統有設定時關掉動畫 ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero h1, .hero p, .hero .btn, .arrow { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
