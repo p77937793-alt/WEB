@@ -443,6 +443,7 @@ function homeHTML(){
       <button data-act="openRules">📖 規則說明</button>
       <button data-act="openPrint">🖨 列印卡牌</button>
       ${devBtn()}
+      <button data-act="goSite">🏠 返回網站首頁</button>
     </div>
     <div class="panel note">
       <b>這是什麼？</b> 實體桌遊的「卡牌系統」數位示範：用來檢查卡牌內容、數值與流程是否合理。六角版圖的地形產出，在這裡簡化成「每回合抽資源卡」。<br>
@@ -666,7 +667,7 @@ function gameHTML(){
     ${G.flags.contribMult>1?`<span class="chip">貢獻分 ×${G.flags.contribMult}</span>`:''}
     <span class="spacer"></span>
     <button data-act="openRules">📖 規則</button><button data-act="openGallery">🃏 卡牌一覽</button>${devBtn()}
-    <button data-act="askQuit">結束遊戲</button></div>
+    <button data-act="askQuit">結束遊戲</button><button data-act="goSite">🏠 首頁</button></div>
   <div class="game">
     <div class="panel"><h3>🏗 公共建設（全體合作）</h3>${projHTML}
       ${!pr?'<p><b>🎉 共同目標已達成</b></p>':''}</div>
@@ -711,7 +712,7 @@ function endHTML(){
       ${rows.map((r,i)=>`<tr style="border-top:1px solid var(--line)"><td>${success||half?i+1:'—'}</td><td>${esc(r.p.name)}</td><td align="center">${r.sc.contrib}</td><td align="center">${r.sc.vp}</td><td align="center">${r.sc.wet}</td>
         <td align="center"><b>${half?Math.floor(r.sc.total/2):r.sc.total}</b></td></tr>`).join('')}</table></div>
     ${mem.length?`<h2 style="margin-top:24px">今昔對照：這些埤塘後來怎麼了？</h2><div class="gallery" style="justify-content:center">${mem.map(c=>cardHTML(c)).join('')}</div>`:''}
-    <div class="btns"><button class="primary" data-act="goSetup">再玩一次</button><button data-act="goHome">回首頁</button></div></div>`;
+    <div class="btns"><button class="primary" data-act="goSetup">再玩一次</button><button data-act="goHome">回遊戲首頁</button><button data-act="goSite">🏠 返回網站首頁</button></div></div>`;
 }
 
 /* ================= 卡牌一覽 ================= */
@@ -929,6 +930,11 @@ function exportCSV(){
 /* ================= 互動事件 ================= */
 const ACT={
   goHome(){VIEW='home';G=null;render()},
+  goSite(){
+    if(VIEW==='game'){MODAL={html:'<h3>要離開遊戲回到網站首頁嗎？</h3><p>這一局的進度不會保存。</p><div class="row"><button data-act="modalNo">繼續玩</button><button class="primary" data-act="goSiteYes">離開</button></div>'};render();return}
+    location.href='index.html';
+  },
+  goSiteYes(){location.href='index.html'},
   goSetup(){VIEW='setup';render()},
   startGame(){startGame();render()},
   openGallery(){OVER='gallery';render()},
