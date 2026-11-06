@@ -59,6 +59,28 @@
       transform: none;
     }
 
+
+    /* 每一頁左下角的圖片說明 */
+    .credit {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      font-size: 11px;
+      opacity: .75;
+      max-width: 60%;
+      text-align: left;
+      line-height: 1.4;
+    }
+    @media (max-width: 600px) { .credit { max-width: 38%; font-size: 10px; } }
+
+
+    /* 第 10 頁：辨天池（昔）與陽明運動公園（今）對照 */
+    #p10 { background: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)), url("images/story/p10-yangming.jpg") center / cover, #6b46c1; }
+    #p10 h2, #p10 p { text-shadow: 0 2px 10px rgba(0,0,0,.85); }
+    @media (max-aspect-ratio: 1/1) {   /* 直的手機畫面：改成上下對照 */
+      #p10 { background-image: linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)), url("images/story/p10-yangming-m.jpg"); }
+    }
+
     /* 上方選單固定在最上面，不佔空間 */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; background: rgba(255,255,255,.9); }
 
@@ -85,71 +107,82 @@
 
   <!-- 第 1 格 -->
   <section class="panel" id="p1" style='background: linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)), url("images/ex-hero.jpg") center / cover;'>
+    <small class="credit">底圖：〈桃園農田水利會灌溉區域圖〉（出處待補）</small>
     <h2 class="reveal">一滴水的旅程</h2>
     <p class="reveal">往下滑，跟著一滴水從大漢溪流進桃園台地。</p>
     <a class="arrow" href="#p2" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 2 格 -->
-  <section class="panel" id="p2" style='background: #a5643a;'>
+  <section class="panel" id="p2" style='background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("images/缺水.jpg") center / cover, #a5643a;'>
+    <small class="credit">照片：出處待補</small>
     <h2 class="reveal">台地上缺水</h2>
     <p class="reveal">大漢溪的河床深陷在台地崖壁下方，水上不來。先民利用不透水的紅土挖埤塘，蓄存雨水灌溉。</p>
     <a class="arrow" href="#p3" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 3 格 -->
-  <section class="panel" id="p3" style='background: #8a5a2b;'>
+  <section class="panel" id="p3" style='background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)), url("images/農民各自為政.jpg") center / cover, #8a5a2b;'>
+    <small class="credit">照片：出處待補（今日照片，非早期景象）</small>
     <h2 class="reveal">埤塘各自為政</h2>
     <p class="reveal">早期埤塘由農民各自開鑿、各自管理，池與池之間沒有水路相連。豪雨時溢流，久旱時乾涸。</p>
     <a class="arrow" href="#p4" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 4 格 -->
-  <section class="panel" id="p4" style='background: #2b6cb0;'>
+  <section class="panel" id="p4" style='background: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url("images/石門取水口.jpg") center / cover, #2b6cb0;'>
+    <small class="credit">照片：出處待補</small>
     <div class="big reveal">1916</div>
     <h2 class="reveal">石門取水口開工</h2>
     <p class="reveal">從大漢溪上游石門取水，利用台地向西北傾斜的地勢，讓水靠重力流上台地。</p>
     <a class="arrow" href="#p5" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 5 格 -->
-  <section class="panel" id="p5" style='background: #374151;'>
+  <section class="panel" id="p5" style='background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("images/穿山隧道.jpg") center / cover, #374151;'>
+    <small class="credit">照片：出處待補（拍攝年代待核）</small>
     <div class="big reveal">15.62 公里</div>
     <h2 class="reveal">穿山的導水隧道</h2>
     <p class="reveal">導水路約 20.47 公里，其中 8 段隧道合計約 15.62 公里，施工時遇到地層鬆軟、地下水滲出。</p>
     <a class="arrow" href="#p6" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 6 格 -->
-  <section class="panel" id="p6" style='background: #4b5563;'>
+  <section class="panel" id="p6" style='background: linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)), url("images/story/p6-people.svg") center / cover, #4b5563;'>
+    <small class="credit">示意圖：施工的人們（剪影，非特定人物）</small>
     <h2 class="reveal">蓋大圳的人</h2>
     <p class="reveal">張令紀等技師帶領工程，參與施工的還有礦工與在地客家茶農。殉職名錄中，也留下了溫細妹、范氏美妹等女性的名字。</p>
     <a class="arrow" href="#p7" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 7 格 -->
-  <section class="panel" id="p7" style='background: #2b7bb9;'>
+  <section class="panel" id="p7" style='background: linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)), url("images/通水.png") center 35% / cover, #2b7bb9;'>
+    <small class="credit">照片：出處待補（拍攝年代待核）</small>
     <div class="big reveal">1924.5.26</div>
     <h2 class="reveal">通水</h2>
     <p class="reveal">導水路及主要幹支分線通水，水經幹線、支線、分線送往各灌溉區。</p>
     <a class="arrow" href="#p8" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 8 格 -->
-  <section class="panel" id="p8" style='background: #1f7a8c;'>
+  <section class="panel" id="p8" style='background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("images/貯水池.jpg") center / cover, #1f7a8c;'>
+    <small class="credit">照片：出處待補（今日空拍）</small>
     <div class="big reveal">231</div>
     <h2 class="reveal">口線內貯水池</h2>
     <p class="reveal">1919 年成立的桃園大圳組合整修貯水池與給水路，1928 年完成整體系統。雨季存水、乾季放水。</p>
     <a class="arrow" href="#p9" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 9 格 -->
-  <section class="panel" id="p9" style='background: #5d8f2f;'>
+  <section class="panel" id="p9" style='background: linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)), url("images/水田.jpg") center 60% / cover, #5d8f2f;'>
+    <small class="credit">照片：出處待補</small>
     <div class="big reveal">二萬二千餘公頃</div>
     <h2 class="reveal">從看天田到雙期稻作</h2>
     <p class="reveal">大圳供應二萬二千餘公頃耕地，原本缺水的土地，成為適合一年兩期稻作的水田。</p>
     <a class="arrow" href="#p10" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 10 格 -->
-  <section class="panel" id="p10" style='background: #6b46c1;'>
+  <section class="panel" id="p10">
+    <small class="credit">昔：1928 年辨天池（秋惠文庫）／今：陽明運動公園（出處待補）。上網前需確認兩張照片的授權</small>
     <h2 class="reveal">埤塘的今天</h2>
     <p class="reveal">1-1 號池「辨天池」曾是桃園的遊憩名勝，後因機場開發與遷村安置填平，成為今天的陽明運動公園一帶。</p>
     <a class="arrow" href="#p11" aria-label="下一段">⌄</a>
   </section>
   <!-- 第 11 格（最後一格，不放箭頭） -->
-  <section class="panel" id="p11" style="background:#f4efe4;color:#2d2a26">
+  <section class="panel" id="p11" style='background: linear-gradient(rgba(244,239,228,.55),rgba(244,239,228,.55)), url("images/story/p11-hex.svg") center / cover, #f4efe4; color:#2d2a26;'>
+    <small class="credit">示意圖：桌遊的六角板塊</small>
     <h2 class="reveal">換你來蓋大圳</h2>
     <p class="reveal">在桌遊裡和其他玩家一起完成這條水路，或在小遊戲裡化身一滴水。</p>
     <div class="reveal"><a class="btn" href="play.html" style="background:#2b7bb9;color:white">開始試玩桌遊</a>

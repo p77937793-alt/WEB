@@ -37,7 +37,7 @@ body {
     text-align: center;
     padding: 80px 20px;
     background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)), /* 半透明黑色，讓白字看得清楚 */
-    url("images/ex-hero.jpg") center / cover no-repeat; /* 照片置中、填滿整區 */
+    url("images/P3110446.jpg") center / cover no-repeat; /* 照片置中、填滿整區 */
     color: white;
 }
 .hero h1 { font-size: 56px; margin: 0; letter-spacing: 8px; }
@@ -160,3 +160,22 @@ html { scroll-behavior: smooth; }
   .hero h1, .hero p, .hero .btn, .arrow { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* ===== 14. 互動地圖 ===== */
+/* ★ 可以自己調整的數字 */
+.map-frame {
+  --map-width: 100%;      /* 地圖寬度：100% = 和文字一樣寬；也可以寫 1100px 或 95vw，會比文字欄更寬 */
+  --map-height: 620px;    /* 地圖高度（電腦） */
+  --gap-above: 16px;      /* 地圖和上面標題的距離 */
+  --gap-below: 8px;       /* 地圖和下面文字的距離 */
+  width: var(--map-width);
+  max-width: 96vw;
+  margin: var(--gap-above) 0 var(--gap-below);
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);   /* 讓變寬的地圖保持置中 */
+}
+.map-frame iframe { width: 100%; height: var(--map-height); border: 0; border-radius: 12px; display: block; background: #e9dcc6; }
+.map-more { text-align: right; font-size: 14px; }
+.map-more a { color: #2b7bb9; }
+@media (max-width: 600px) { .map-frame { --map-height: 75vh; } }

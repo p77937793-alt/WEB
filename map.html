@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>一水千田｜互動灌溉地圖</title>
 <style>
+  /* ============================================================
+     ★ 可以自己調整的數字（改完存檔，瀏覽器按 F5）
+     ============================================================ */
+  :root {
+    --panel-width: 360px;        /* 右邊文字欄的寬度（電腦） */
+    --panel-height: 42%;         /* 下方文字欄的高度（手機） */
+    --panel-padding: 16px 18px;  /* 文字離欄位邊框的距離：上下 左右 */
+    --text-size: 15px;           /* 說明文字大小 */
+    --title-size: 22px;          /* 標題大小 */
+    --line-gap: 1.65;            /* 行距 */
+    --para-gap: 6px;             /* 段落之間的距離 */
+  }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; color: #2d2a26; background: #2d2a26; }
   .app { display: flex; height: 100%; }
@@ -44,10 +56,10 @@
           padding: 6px 14px; border-radius: 999px; font-size: 13px; z-index: 5; pointer-events: none; transition: opacity .5s; white-space: nowrap; }
 
   /* ---- 資訊面板 ---- */
-  .panel { width: 360px; background: #fffaf0; overflow-y: auto; padding: 16px 18px; border-left: 1px solid #d9cfbf; }
-  .panel h2 { margin: 0 0 4px; font-size: 22px; color: #2b7bb9; }
+  .panel { width: var(--panel-width); flex: none; background: #fffaf0; overflow-y: auto; padding: var(--panel-padding); border-left: 1px solid #d9cfbf; }
+  .panel h2 { margin: 0 0 4px; font-size: var(--title-size); color: #2b7bb9; }
   .panel h3 { margin: 16px 0 6px; font-size: 15px; color: #7a7166; }
-  .panel p { margin: 6px 0; line-height: 1.65; font-size: 15px; }
+  .panel p { margin: var(--para-gap) 0; line-height: var(--line-gap); font-size: var(--text-size); }
   .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin: 10px 0; }
   .stat { background: white; border: 1px solid #e6dccb; border-radius: 8px; padding: 8px 4px; text-align: center; }
   .stat b { display: block; font-size: 22px; color: #b5532d; }
@@ -57,15 +69,23 @@
   .chip:hover { border-color: #2b7bb9; color: #2b7bb9; }
   .bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: #eee; margin: 6px 0; }
   .bar i { display: block; }
-  .uses { margin: 4px 0; padding-left: 18px; font-size: 14px; line-height: 1.6; }
+  .uses { margin: 4px 0; padding-left: 18px; font-size: calc(var(--text-size) - 1px); line-height: var(--line-gap); }
   .tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; color: white; background: #6b7280; margin-left: 6px; vertical-align: middle; }
   .tag.ok { background: #2f855a; } .tag.wait { background: #d97706; }
   .back { margin-top: 12px; border: 0; background: #2b7bb9; color: white; padding: 8px 16px; border-radius: 999px; font: inherit; cursor: pointer; }
   .note { font-size: 12px; color: #7a7166; line-height: 1.6; margin-top: 18px; border-top: 1px dashed #d9cfbf; padding-top: 10px; }
 
+  /* 文字欄和地圖中間的分隔線：可以拖曳 */
+  .divider { flex: none; width: 10px; background: #e6dccb; cursor: col-resize; position: relative; touch-action: none; }
+  .divider::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+                    width: 4px; height: 44px; border-radius: 4px; background: #b3a58f; }
+  .divider:hover, .divider.on { background: #cfe3f2; }
+
   @media (max-width: 760px) {
     .app { flex-direction: column; }
-    .panel { width: 100%; height: 42%; border-left: 0; border-top: 1px solid #d9cfbf; }
+    .panel { width: 100%; height: var(--panel-height); border-left: 0; border-top: 1px solid #d9cfbf; }
+    .divider { width: 100%; height: 12px; cursor: row-resize; }
+    .divider::after { width: 44px; height: 4px; }
     .layers { font-size: 12px; }
   }
   @media (prefers-reduced-motion: reduce) { .flow { animation: none; } #lift { transition: none; } }
@@ -109,6 +129,7 @@
     </div>
     <div class="hint" id="hint">拖曳移動・滾輪或雙指縮放・點一塊灌區看詳細資料</div>
   </div>
+  <div class="divider" id="divider" title="拖曳調整文字欄寬度（點兩下恢復預設）"></div>
   <aside class="panel" id="panel"></aside>
 </div>
 
@@ -360,6 +381,39 @@ function showPoi(p) {
   panel.innerHTML = `<h2>${p.id}. ${p.name}${p.status === 'wait' ? '<span class="tag wait">待核</span>' : ''}</h2>
     <p>${p.text}</p><button class="back" onclick="showOverview()">回到全圖</button>${noteHTML()}`;
 }
+
+/* =========================================================
+   6. 拖曳分隔線，調整文字欄寬度／高度
+   - 也可以在網址後面加 ?panel=300（寬度）&text=16（字級），
+     例如首頁的 <iframe src="map.html?panel=300">
+   ========================================================= */
+const root = document.documentElement;
+const qs = new URLSearchParams(location.search);
+if (qs.get('panel')) root.style.setProperty('--panel-width', parseInt(qs.get('panel')) + 'px');
+if (qs.get('text')) root.style.setProperty('--text-size', parseInt(qs.get('text')) + 'px');
+try { const sv = JSON.parse(localStorage.getItem('yq-map-panel') || 'null'); if (sv && !qs.get('panel')) { if (sv.w) root.style.setProperty('--panel-width', sv.w + 'px'); if (sv.h) root.style.setProperty('--panel-height', sv.h + '%'); } } catch (_) {}
+const divider = document.getElementById('divider');
+const isMobile = () => matchMedia('(max-width: 760px)').matches;
+let resizing = false;
+divider.addEventListener('pointerdown', e => { resizing = true; divider.classList.add('on'); divider.setPointerCapture(e.pointerId); e.preventDefault(); });
+divider.addEventListener('pointermove', e => {
+  if (!resizing) return;
+  const app = document.querySelector('.app').getBoundingClientRect();
+  if (isMobile()) {
+    const h = Math.min(75, Math.max(20, (app.bottom - e.clientY) / app.height * 100));
+    root.style.setProperty('--panel-height', h.toFixed(1) + '%');
+  } else {
+    const w = Math.min(app.width * 0.6, Math.max(240, app.right - e.clientX));
+    root.style.setProperty('--panel-width', Math.round(w) + 'px');
+  }
+  apply();
+});
+const endResize = () => {
+  if (!resizing) return; resizing = false; divider.classList.remove('on');
+  try { localStorage.setItem('yq-map-panel', JSON.stringify({ w: parseInt(getComputedStyle(root).getPropertyValue('--panel-width')), h: parseFloat(getComputedStyle(root).getPropertyValue('--panel-height')) })); } catch (_) {}
+};
+divider.addEventListener('pointerup', endResize); divider.addEventListener('pointercancel', endResize);
+divider.addEventListener('dblclick', () => { root.style.removeProperty('--panel-width'); root.style.removeProperty('--panel-height'); try { localStorage.removeItem('yq-map-panel'); } catch (_) {} apply(); });
 
 /* 開始 */
 showOverview();
