@@ -37,7 +37,7 @@ body {
     text-align: center;
     padding: 80px 20px;
     background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)), /* 半透明黑色，讓白字看得清楚 */
-    url("images/P3110446.jpg") center / cover no-repeat; /* 照片置中、填滿整區 */
+    url("images/ex-hero.jpg") center / cover no-repeat; /* 照片置中、填滿整區 */
     color: white;
 }
 .hero h1 { font-size: 56px; margin: 0; letter-spacing: 8px; }
